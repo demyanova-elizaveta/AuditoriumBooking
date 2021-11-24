@@ -1,0 +1,171 @@
+﻿<Window x:Class="AuditoriumBooking.AppInfoForm.AppInfoForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" 
+        Title="Информация по использованию" MinHeight="500" MinWidth="700" Height="1000" Width="1000" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="{x:Type Paragraph}">
+            <Setter Property="TextIndent" Value="25"/>
+        </Style>
+    </Window.Resources>
+    <!--<Grid>
+        <FlowDocumentScrollViewer>
+            <FlowDocument x:Name="FdDocument" FontSize="20" FontFamily="Times new Roman" TextAlignment="Left" Cursor="Arrow">
+                <Section>
+                    <Paragraph TextAlignment="Center">
+                        <Bold FontSize="22">
+                            Добро пожаловать в приложение для бронирования аудиторий!
+                        </Bold>
+                    </Paragraph>
+                    <Paragraph>С помощью данного приложения Вы можете:
+                    </Paragraph>
+                    <List>
+                        <ListItem>
+                            <Paragraph>открывать файлы с расписанием, заданные в формате XML;</Paragraph>
+                        </ListItem>
+                        <ListItem>
+                            <Paragraph>добавлять новые заявки, которые не пересекаются с событиями из текущего расписания;</Paragraph>
+                        </ListItem>
+                        <ListItem>
+                            <Paragraph>удалять как события из расписания, так и добавленные заявки;</Paragraph>
+                        </ListItem>
+                        <ListItem>
+                            <Paragraph>получить свежую информацию о бронировании и заявках с любого ПК, на котором установлено приложение, если у Вас есть доступ к сети Интернет.</Paragraph>
+                        </ListItem>
+                    </List>
+                    <Paragraph>
+                        <Floater Width="300" HorizontalAlignment="Left" Margin="10" Padding="3">
+                            <BlockUIContainer>
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel>
+                                        <Image Source="/AuditoriumBooking;component/Images/openScheduleFileRequirement.png"/>
+                                        <TextBlock Text="Рис. 1" TextAlignment="Center" FontSize="16"/>
+                                    </StackPanel>
+                                    <Separator Margin="10"/>
+                                    <StackPanel Width="100" Orientation="Horizontal">
+                                        <StackPanel VerticalAlignment="Bottom">
+                                            <Image Width="50" Source="/AuditoriumBooking;component/Images/leftArrow.png"/>
+                                        </StackPanel>
+                                        <StackPanel VerticalAlignment="Bottom">
+                                            <Image Width="45" Source="/AuditoriumBooking;component/Images/rightArrow.png"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <TextBlock Text="Рис. 2" TextAlignment="Center" FontSize="16"/>
+                                </StackPanel>
+                            </BlockUIContainer>
+                        </Floater>
+                        Для того, чтобы начать использовать приложение, Вам необходимо загрузить файл с расписанием. Если Вы видите пустой экран и следующее окно(рис. 1), то Вам необходимо выбрать файл с расписанием, загруженный на Вашем ПК.
+                    </Paragraph>
+                    <Paragraph>
+                        После этого Вы можете приступить к использованию приложения. При открытии расписания Вы увидите дату текущего дня. Чтобы изменить её на другую необходимую дату, можно переключаться последовательно между днями, с помощью стрелок, доступных на экране(рис. 2) или с помощью выбора даты на календаре(рис. 3 и 4).
+                        <Floater Width="250" HorizontalAlignment="Right" Margin="10" Padding="3">
+                            <BlockUIContainer>
+                                <StackPanel>
+                                    <StackPanel VerticalAlignment="Bottom">
+                                        <Image Width="150" Source="/AuditoriumBooking;component/Images/datePicker.png"/>
+                                        <TextBlock Text="Рис. 3" TextAlignment="Center" FontSize="16"/>
+                                    </StackPanel>
+                                    <Separator Margin="10"/>
+                                    <StackPanel>
+                                        <Image Width="150" Source="/AuditoriumBooking;component/Images/monthView.png" Height="150"/>
+                                        <TextBlock Text="Рис. 4" TextAlignment="Center" FontSize="16"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </BlockUIContainer>
+                        </Floater>
+                    </Paragraph>
+                    <Paragraph>
+                        Для того, чтобы
+                        <Bold>добавить заявку
+                        </Bold> о внеплановом мероприятии, Вы можете нажать на иконку(рис. 5), где Вам необходимо будет заполнить все требуемые поля.
+                    </Paragraph>
+                    <Paragraph>
+                        <Floater Width="200" HorizontalAlignment="Left" Margin="10" Padding="3">
+                            <BlockUIContainer>
+                                <StackPanel>
+                                    <StackPanel>
+                                        <Image Width="50" Source="/AuditoriumBooking;component/Images/openApplicationFormIcon.png"/>
+                                        <TextBlock Text="Рис. 5" TextAlignment="Center" FontSize="16"/>
+                                    </StackPanel>
+                                    <Separator Margin="10"/>
+                                    <StackPanel>
+                                        <Image Width="150" Source="/AuditoriumBooking;component/Images/contextMenu.png"/>
+                                        <TextBlock Text="Рис. 6" TextAlignment="Center" FontSize="16"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </BlockUIContainer>
+                        </Floater>
+                        Если Вам необходимо
+                        <Bold>удалить
+                        </Bold> какое-либо событие, Вы можете сделать это, нажав на
+                            <Bold>правую кнопку мыши
+                            </Bold> , после чего перед Вами откроется контекстное меню(рис. 6). В нём также есть возможность выбора цветов для фиксирования наиболее важных или требуемых внимания событий.
+                    </Paragraph>
+                    <Paragraph>
+                        Если Вы захотите заменить загруженный файл с расписанием на некоторый другой, то Вы
+                        <Underline>потеряете
+                        </Underline> все запланированные заявки и внесённые изменения, связанные с предыдущим расписанием.
+                    </Paragraph>
+                    <Paragraph>
+                        Все внесённые Вами изменения после завершения сеанса использования приложения будут сохранены на Google Drive, что позволит Вам использовать приложения с разных ПК и получать оттуда актуальные данные.
+                    </Paragraph>
+                </Section>
+            </FlowDocument>
+        </FlowDocumentScrollViewer>
+    </Grid>-->
+    <DockPanel LastChildFill="False">
+        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="10 0 10 10">
+            <Separator VerticalAlignment="Bottom" BorderBrush="LightGray" BorderThickness="0.5"/>
+            <TextBlock FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="2021| AuditoriumBooking"/>
+        </StackPanel>
+        <FlowDocumentScrollViewer>
+            <FlowDocument x:Name="FdDocument" FontSize="20" FontFamily="Times new Roman" TextAlignment="Left" Cursor="Arrow">
+                <Section>
+                    <Paragraph TextAlignment="Center">
+                        <Bold FontSize="25">
+                            Добро пожаловать в приложение для бронирования аудиторий!
+                        </Bold>
+                    </Paragraph>
+                    <Paragraph>С помощью данного приложения Вы можете:
+                    </Paragraph>
+                    <List>
+                        <ListItem>
+                            <Paragraph>открывать файлы с расписанием, заданные в формате XML;</Paragraph>
+                        </ListItem>
+                        <ListItem>
+                            <Paragraph>добавлять новые заявки, которые не пересекаются с событиями из текущего расписания;</Paragraph>
+                        </ListItem>
+                        <ListItem>
+                            <Paragraph>удалять как события из расписания, так и добавленные заявки;</Paragraph>
+                        </ListItem>
+                        <ListItem>
+                            <Paragraph>получить свежую информацию о бронировании и заявках с любого ПК, на котором установлено приложение, если у Вас есть доступ к сети Интернет.</Paragraph>
+                        </ListItem>
+                    </List>
+                    <Paragraph>
+                        Для того, чтобы начать работу с приложением, Вам необходимо загрузить файл с расписанием с вашего ПК. После первичной загрузки данные буду синхронизированы с облаком и при последующем открытии Вам не нужно будет повторять эту процедуру снова.
+                    </Paragraph>
+                    <Paragraph>
+                        Если Вы захотите заменить загруженный файл с расписанием на некоторый другой, то Вы
+                        <Underline>потеряете
+                        </Underline> все запланированные заявки и внесённые изменения, связанные с предыдущим расписанием.
+                    </Paragraph>
+                    <Paragraph>
+                        Все внесённые Вами изменения после завершения сеанса использования приложения будут сохранены на Google Drive, что позволит Вам использовать приложения с разных ПК и получать оттуда актуальные данные.
+                    </Paragraph>
+                    <Paragraph>
+                        Все внесённые Вами изменения и файлы с информацией будут доступны после завершения сеанса использования приложения на Google Drive в папке AuditoriumBookingAppFolder. Вы можете дать доступ к этой папке некоторым пользователям для того, чтобы они также могли пользоваться приложением, синхронизированным с Вашим диском.
+                    </Paragraph>
+                    <Paragraph>
+                        За более подробной информацией или с вопросами по работе приложения обращаться к разработчику по адресу
+                        <Italic>
+                            elizavetad20000102@gmail.com.
+                        </Italic>
+                    </Paragraph>
+                </Section>
+            </FlowDocument>
+        </FlowDocumentScrollViewer>
+    </DockPanel>
+</Window>

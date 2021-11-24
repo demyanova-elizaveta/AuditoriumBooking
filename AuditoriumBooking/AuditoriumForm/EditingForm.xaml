@@ -1,0 +1,367 @@
+﻿<Window x:Class="AuditoriumBooking.AuditoriumForm.EditingForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AuditoriumBooking.AuditoriumForm"
+        xmlns:valid="clr-namespace:DataValidation;assembly=DataValidation"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Окно бронирования" Height="850" MinWidth="700" Width="700" WindowStartupLocation="CenterScreen" ResizeMode="CanResize">
+    <Window.Resources>
+        <Style BasedOn="{StaticResource {x:Type materialDesign:SnackbarMessage}}" TargetType="{x:Type materialDesign:SnackbarMessage}">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="MaterialDesignSnackbarActionButton" TargetType="Button">
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="materialDesign:RippleAssist.Feedback" Value="{DynamicResource MaterialDesignSnackbarRipple}" />
+            <Setter Property="TextBlock.FontWeight" Value="Medium" />
+            <Setter Property="TextBlock.FontSize" Value="14" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Height" Value="36" />
+            <Setter Property="Margin" Value="8 -10 -8 -10" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="Root" Background="{TemplateBinding Background}">
+                            <materialDesign:Ripple Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Focusable="False"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Padding="{TemplateBinding Padding}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" Value="{DynamicResource MaterialDesignSnackbarMouseOver}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" Value="0.23" />
+                            </Trigger>
+                            <Trigger Property="DockPanel.Dock" Value="Bottom">
+                                <Setter Property="Margin" Value="0 18 -8 -8" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="MaterialDesignSnackbarActionLightButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignSnackbarActionButton}">
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightBrush}" />
+        </Style>
+        <ResourceDictionary x:Key="ResourcesList" Source="/Styles/StylesDictionary.xaml" />
+    </Window.Resources>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <StackPanel Width="600" HorizontalAlignment="Center" VerticalAlignment="Top" materialDesign:ShadowAssist.ShadowDepth="Depth5" materialDesign:ShadowAssist.ShadowEdges="Bottom,Right">
+            <Label Margin="10" FontWeight="Bold" HorizontalAlignment="Center" FontSize="22">Бронирование</Label>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <materialDesign:DrawerHost x:Name="DrawerHost">
+                    <materialDesign:DrawerHost.Style>
+                        <Style TargetType="materialDesign:DrawerHost" BasedOn="{StaticResource {x:Type materialDesign:DrawerHost}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsChecked, ElementName=BackgroundToggle}" Value="True">
+                                    <Setter Property="OverlayBackground" Value="{DynamicResource PrimaryHueMidBrush}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </materialDesign:DrawerHost.Style>
+                    <materialDesign:DrawerHost.BottomDrawerContent>
+                        <StackPanel Margin="16" HorizontalAlignment="Center" Orientation="Vertical">
+                            <TextBlock x:Name="freeClassroomsInfoTB" Text="{Binding BusyClassrooms, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" TextTrimming="WordEllipsis" HorizontalAlignment="Left" FontSize="16" />
+                            <Button Content="Закрыть" Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}" CommandParameter="{x:Static Dock.Bottom}" Style="{DynamicResource MaterialDesignFlatButton}" Margin="4" Width="100" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </materialDesign:DrawerHost.BottomDrawerContent>
+                    <StackPanel Orientation="Vertical" Width="600">
+                        <DockPanel Margin="0 20 0 0" LastChildFill="False">
+                            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                <materialDesign:PackIcon Kind="Account" Margin="0 8 0 0" />
+                                <Label FontSize="17" Content="Преподаватель"/>
+                            </StackPanel>
+                            <TextBox x:Name="teacherNameTB" materialDesign:ValidationAssist.HorizontalAlignment="Right" HorizontalContentAlignment="Right" DockPanel.Dock="Right" FontSize="17" 
+                             Width="300" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                <TextBox.Text>
+                                    <Binding Path="TeacherName" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <valid:StringNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </DockPanel>
+
+                        <DockPanel Margin="0 20 0 0" LastChildFill="False">
+                            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                <materialDesign:PackIcon Kind="BookOpenVariant" Margin="0 8 0 0" />
+                                <Label FontSize="17" Content="Предмет/мероприятие"/>
+                            </StackPanel>
+                            <TextBox x:Name="subjectNameTB" materialDesign:ValidationAssist.HorizontalAlignment="Right" HorizontalContentAlignment="Right" DockPanel.Dock="Right" FontSize="17" 
+                             Width="300" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                <TextBox.Text>
+                                    <Binding Path="SubjectName" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <valid:StringNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </DockPanel>
+
+                        <DockPanel Margin="0 40 0 0" LastChildFill="False">
+                            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                <materialDesign:PackIcon Kind="School" Margin="0 8 0 0" />
+                                <Label FontSize="17" Content="№ аудитории"/>
+                            </StackPanel>
+                            <ComboBox x:Name="classroomCB" ItemsSource="{Binding}" HorizontalContentAlignment="Right" DockPanel.Dock="Right" FontSize="17" 
+                             Width="300" SelectionChanged="ClassroomCB_SelectionChanged" materialDesign:HintAssist.Hint="Выберите номер аудитории" TextBlock.TextAlignment="Right" IsTextSearchEnabled="True" TextSearch.TextPath="fullName" IsEditable="True">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=fullName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DockPanel>
+
+                        <DockPanel Margin="0 20 0 0" LastChildFill="False">
+                            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                <materialDesign:PackIcon Kind="AccountMultiple" Margin="0 8 0 0" />
+                                <Label FontSize="17" Content="Группа"/>
+                            </StackPanel>
+                            <TextBox x:Name="groupNameTB" materialDesign:ValidationAssist.HorizontalAlignment="Right" HorizontalContentAlignment="Right" DockPanel.Dock="Right" FontSize="17" 
+                             Width="300" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                <TextBox.Text>
+                                    <Binding Path="GroupName" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <valid:StringNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </DockPanel>
+
+                        <DockPanel Margin="0 20 0 0" LastChildFill="False">
+                            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                <materialDesign:PackIcon Kind="CalendarClock" Margin="0 8 0 0" />
+                                <Label FontSize="17" Content="Дата проведения"/>
+                            </StackPanel>
+                            <DatePicker x:Name="datePicker"
+                        materialDesign:CalendarAssist.IsHeaderVisible="False"
+                        materialDesign:ValidationAssist.HorizontalAlignment="Right" 
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        DockPanel.Dock="Right"
+                        HorizontalContentAlignment="Right"
+                        Width="300"
+                        SelectedDateChanged="DatePicker_SelectedDateChanged">
+                                <DatePicker.SelectedDate>
+                                    <Binding Path="." UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <valid:FutureDateValidationRule ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DatePicker.SelectedDate>
+                            </DatePicker>
+                        </DockPanel>
+
+                        <DockPanel Margin="0 20 0 0" LastChildFill="False">
+                            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                <materialDesign:PackIcon Kind="ViewWeekOutline" Margin="0 8 0 0" />
+                                <Label FontSize="17" Content="Неделя"/>
+                            </StackPanel>
+                            <ListBox x:Name="RadioButtonGroupWeekChoice" DockPanel.Dock="Right" VerticalAlignment="Center" Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineListBox}" SelectionChanged="RadioButtonGroupWeekChoice_SelectionChanged">
+                                <ListBoxItem Content="Числитель" />
+                                <ListBoxItem Content="Знаменатель" />
+                                <ListBoxItem Content="Все недели" IsSelected="True" />
+                            </ListBox>
+                        </DockPanel>
+
+                        <DockPanel Margin="0 30 0 0" LastChildFill="False">
+                            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Top">
+                                <materialDesign:PackIcon Kind="ClockTimeEightOutline" Margin="0 8 0 0" />
+                                <Label FontSize="17" Content="Время начала"/>
+                            </StackPanel>
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                <TextBox x:Name="startTimeTB" materialDesign:ValidationAssist.HorizontalAlignment="Right" materialDesign:HintAssist.Hint="ЧЧ:ММ" Width="270" HorizontalContentAlignment="Right" FontSize="16" Margin="0 0 10 0">
+                                    <TextBox.Text>
+                                        <Binding Path="StartTimeFormat" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <valid:TimeValidationRule ValidatesOnTargetUpdated="True"/>
+                                                <valid:StringNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <materialDesign:PopupBox HorizontalAlignment="Right" PlacementMode="BottomAndAlignRightEdges">
+                                    <materialDesign:PopupBox.ToggleContent>
+                                        <materialDesign:PackIcon Kind="ChevronDown"/>
+                                    </materialDesign:PopupBox.ToggleContent>
+                                    <ListBox x:Name="startTimeTable" HorizontalContentAlignment="Center" Width="250" Height="200" SelectionChanged="startTimeTable_SelectionChanged">
+                                        <ListBox.Resources>
+                                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MaterialDesignToolToggleListBoxItem}">
+                                                <Setter Property="Padding" Value="4 6 4 6" />
+                                                <Setter Property="Background" Value="Black" />
+                                            </Style>
+                                        </ListBox.Resources>
+                                        <ListBoxItem>
+                                            <TextBlock Text="08:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="09:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="10:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="11:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="12:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="13:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="14:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="15:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="16:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="17:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="18:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="19:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="20:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="21:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="22:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="23:00" />
+                                        </ListBoxItem>
+                                    </ListBox>
+                                </materialDesign:PopupBox>
+                            </StackPanel>
+                        </DockPanel>
+
+                        <DockPanel Margin="0 30 0 0" LastChildFill="False">
+                            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Top">
+                                <materialDesign:PackIcon Kind="ClockTimeEightOutline" Margin="0 8 0 0" />
+                                <Label FontSize="17" Content="Время окончания"/>
+                            </StackPanel>
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                <TextBox x:Name="endTimeTB" materialDesign:ValidationAssist.HorizontalAlignment="Right" materialDesign:HintAssist.Hint="ЧЧ:ММ" Width="270" HorizontalContentAlignment="Right" FontSize="16" Margin="0 0 10 0">
+                                    <TextBox.Text>
+                                        <Binding Path="EndTimeFormat" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <valid:TimeValidationRule ValidatesOnTargetUpdated="True"/>
+                                                <valid:StringNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <materialDesign:PopupBox HorizontalAlignment="Right" PlacementMode="BottomAndAlignRightEdges">
+                                    <materialDesign:PopupBox.ToggleContent>
+                                        <materialDesign:PackIcon Kind="ChevronDown"/>
+                                    </materialDesign:PopupBox.ToggleContent>
+                                    <ListBox x:Name="endTimeTable" HorizontalContentAlignment="Center" Width="250" Height="200" SelectionChanged="endTimeTable_SelectionChanged">
+                                        <ListBox.Resources>
+                                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MaterialDesignToolToggleListBoxItem}">
+                                                <Setter Property="Padding" Value="4 6 4 6" />
+                                                <Setter Property="Background" Value="Black" />
+                                            </Style>
+                                        </ListBox.Resources>
+                                        <ListBoxItem>
+                                            <TextBlock Text="08:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="09:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="10:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="11:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="12:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="13:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="14:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="15:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="16:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="17:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="18:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="19:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="20:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="21:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="22:00" />
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <TextBlock Text="23:00" />
+                                        </ListBoxItem>
+                                    </ListBox>
+                                </materialDesign:PopupBox>
+                            </StackPanel>
+                        </DockPanel>
+
+                        <DockPanel Margin="0 30 0 0" LastChildFill="False">
+                            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Top">
+                                <materialDesign:PackIcon Kind="FormatListNumbered" Margin="0 8 0 0" />
+                                <Label FontSize="17" Content="Периодичность"/>
+                            </StackPanel>
+                            <CheckBox x:Name="isWeeklyChB" Content="Еженедельно" HorizontalAlignment="Right" HorizontalContentAlignment="Right" DockPanel.Dock="Right" FontSize="17" Click="isWeeklyChB_Click"/>
+                        </DockPanel>
+
+                        <StackPanel x:Name="hiddenPanelForBusyInfo" VerticalAlignment="Top" Margin="30" HorizontalAlignment="Center">
+                            <TextBlock x:Name="mainClassroomsInfoTB" FontSize="16"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </materialDesign:DrawerHost>
+            </Grid>
+            <DockPanel>
+                <Button Style="{StaticResource MaterialDesignFlatButton}" Content="ЗАКРЫТЬ" DockPanel.Dock="Left" Click="CancelButton_Click"/>
+                <Button x:Name="addBtn" Style="{StaticResource MaterialDesignFlatButton}" Content="ИЗМЕНИТЬ" DockPanel.Dock="Right" Click="AddButton_Click"/>
+                <materialDesign:Snackbar Height="70" x:Name="Snackbar" DockPanel.Dock="Bottom" ActionButtonStyle="{StaticResource MaterialDesignSnackbarActionLightButton}" MessageQueue="{materialDesign:MessageQueue}" ActionButtonPlacement="Inline" />
+            </DockPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
