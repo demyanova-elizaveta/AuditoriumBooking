@@ -1,5 +1,4 @@
 # AuditoriumBooking
-Auditorium Booking App
 
 Welcome to the Audotorium Booking App! 
 
