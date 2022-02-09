@@ -18,7 +18,7 @@ All changes you make after the end of the application session will be saved to <
 
 All your information files will be available after the end of the application session on Google Drive in the <ins>AuditoriumBooking folder</ins>. You can give access to this folder to some users so that they can also use the application synchronized with your drive.
 
-<b>P.S.:</b> the work is a demo (on GitHub) and adapted for special users in real life. My Google Drive is used there. In order to access my Google Drive folder, you need to contact me personally. All screenshots of how the work with the application looks like are presented below:
+<b>!P.S.:</b> the work is a demo (on GitHub) and adapted for special users in real life. My Google Drive is used there. In order to access my Google Drive folder, you need to contact me personally. All screenshots of how the work with the application looks like are presented below:
 
 -- Daily schedule -- <br>
 ![Раписание дня](https://user-images.githubusercontent.com/72383419/153280000-130da94b-e3df-4dd7-892a-e5b5d00db948.PNG)
