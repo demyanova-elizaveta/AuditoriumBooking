@@ -23,7 +23,7 @@ Daily schedule
 ![Раписание дня](https://user-images.githubusercontent.com/72383419/153280000-130da94b-e3df-4dd7-892a-e5b5d00db948.PNG)
 
 Access to the context menu
-![Вызов контекстного меню](https://user-images.githubusercontent.com/72383419/153279993-5ea2997d-a93f-4b19-843e-cbade1c35ed2.png)
+![Вызов контекстного меню](https://user-images.githubusercontent.com/72383419/153283197-7d552800-c41a-4c0b-b18f-ded0373b98ce.png)
 
 Booking window
 ![Окно бронирования](https://user-images.githubusercontent.com/72383419/153279999-f33d3a0f-9f15-4fa1-8f7b-f8310cf3a5c9.PNG)
