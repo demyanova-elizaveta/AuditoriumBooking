@@ -14,9 +14,9 @@ With this application you can:
     
 An application language - Russian.
     
-All changes you make after the end of the application session will be saved to <u>Google Drive</u>, which will allow you to use applications from different PCs.
+All changes you make after the end of the application session will be saved to <ins>Google Drive</ins>, which will allow you to use applications from different PCs.
 
-All your information files will be available after the end of the application session on Google Drive in the <u>AuditoriumBooking folder</u>. You can give access to this folder to some users so that they can also use the application synchronized with your drive.
+All your information files will be available after the end of the application session on Google Drive in the <ins>AuditoriumBooking folder</ins>. You can give access to this folder to some users so that they can also use the application synchronized with your drive.
 
 <b>P.S.:</b> the work is a demo (on GitHub) and adapted for special users in real life. My Google Drive is used there. In order to access my Google Drive folder, you need to contact me personally. All screenshots of how the work with the application looks like are presented below:
 
